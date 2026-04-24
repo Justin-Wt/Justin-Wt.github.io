@@ -2,63 +2,120 @@
 <html>
 <head>
   <style>
+    .nav a{
+      color: red;
+    }
+    .nav a:hover{
+      color: white;
+    }
+    section {
+      margin: 20px 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #222;
+    }
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      text-shadow: 0 0 15px red;
+    }
+
+    .hero p {
+      color: lightgray;
+      text-shadow: 0 0 15px white;
+    }
     .projects {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
     }
     body {
-        background-color: #000;
-        color: white;
-        font-family: Arial;
+      background-color: #000;
+      color: white;
+      font-family: Arial;
     }
 
     h1 {
-        color: lime;
+      color: red;
     }
     h2{
       color: red;
+      text-shadow: 0 0 7px red;
     }
     ul {
       color: lightblue;
     }
-    b1 {
-      color: Yellow;
+    .title {
+      color: #880;
+      text-shadow: 0 0 5px black;
+    }
+    .desc {
+      color: #448;
+      text-shadow: 0 0 5px black;
+    }
+    small{
+      color: white;
+      text-shadow: 0 0 5px black;
     }
     p{
       color: #ccc;
     }
-    p1{
-      color: blue;
+    .card {
+      width: 200px;
+      height: 125px;
+      padding: 10px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ccc;
+      background-color: darkred;
+      border: 2px solid #999;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 0 7px #ccc ;
+      transition: 0.2s; /* smooth hover effect */
     }
-    button {
-        width: 200px;
-        height: 150px;
-        padding: 10px 25px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #ccc;
-        background-color: #004;
-        border: 2px solid #999;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.2s; /* smooth hover effect */
-      }
-
-      /* Hover effect */
-      button:hover {
-        background-color: #00c;
-        transform: scale(1.05);
-      }
+    /* Hover effect */
+    .card:hover {
+      background-color: red;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px red;
+    }
   </style>
     <title>
       My Website
     </title>
 </head>
 <body>
-    <h1>
-      Hello, I'm Justin Theodore Halim
-    </h1>
+  <section>
+    <div class="nav">
+      <a href="#about">
+        About
+      </a>
+      <a href="#projects">
+        Projects
+      </a>
+      <a href="#contact">
+        Contact
+      </a>
+    </div>
+  </section>
+  <section>
+    <div class="hero">
+      <h1>
+        Hello, I'm Justin Theodore Halim
+      </h1>
+      <p>
+        Game Developer • Python • RPG Systems
+      </p>  
+    </div>
+  </section>
+  <section id="about">
     <h2>
       About me
     </h2>
@@ -69,103 +126,110 @@
       I also attend a tutor session at Coding Next Makassar for python<br><br>
       my goal is to be a skilled gamedev
     </p>
-
-    <h2>The Language i use</h2>
+  </section>
+  <section>
+    <h2>
+      The Language i use
+    </h2>
     <ul>
-        <li>Python</li>
-        <li>C++</li>
-        <li>HTML</li>
-        <li>GDScript</li>
+      <li>Python</li>
+      <li>C++</li>
+      <li>HTML</li>
+      <li>GDScript</li>
     </ul>
+  </section>
+  <section id="projects">
     <h2>
       my project
     </h2>
     <div class="projects">
-      <button onclick="window.location.href='https://github.com/Justin-Wt/MiniProject/tree/main/guess%20the%20block'">
-        <b1>
+      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/guess%20the%20block' target="_blank" class="card">
+        <span class="title">
           guess the block <br>
-        </b1>
-        <p1>
+        </span>
+        <span class="desc">
           Flash Counting Game <br>
-        </p1>
+        </span>
         <small>
           Python <br>
           oct 2025
         </small>
-      </button>
-      <button onclick="window.location.href='https://github.com/Justin-Wt/MiniProject/tree/main/to%20do%20list'">
-        <b1>
+      </a>
+      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/to%20do%20list' target="_blank" class="card">
+        <span class="title">
           to do list <br>
-        </b1>
-        <p1>
+        </span>
+        <span class="desc">
           Manage and track tasks<br>
-        </p1>
+        </span>
         <small>
           Python <br>
           oct 2025
         </small>
-      </button>
-      <button onclick="window.location.href='https://github.com/Justin-Wt/MiniProject/tree/main/cli%20python%20tutorial'">
-        <b1>
+      </a>
+      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/cli%20python%20tutorial' target="_blank" class="card">
+        <span class="title">
           step-by-step cli python tutorial <br>
-        </b1>
-        <p1>
+        </span>
+        <span class="desc">
           Python CLI guide<br>
-        </p1>
+        </span>
         <small>
           Python<br>
           oct 2025 - nov 2025
         </small>
-      </button>
-      <button onclick="window.location.href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python'">
-        <b1>
+      </a>
+      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python' target="_blank" class="card">
+        <span class="title">
           python in python <br>
-        </b1>
-        <p1>
+        </span>
+        <span class="desc">
           Interactive Python code<br>
-        </p1>
+        </span>
         <small>
           Python<br>
           dec 2025
         </small>
-      </button>
-      <button onclick="window.location.href='https://github.com/Justin-Wt/My-Rpg-game-project--py'">
-        <b1>
+      </a>
+      <a href='https://github.com/Justin-Wt/My-Rpg-game-project--py' target="_blank" class="card">
+        <span class="title">
           Project Rebuild RPG <br>
-        </b1>
-        <p1>
+        </span>
+        <span class="desc">
           turn-base battle<br>
-        </p1>
+        </span>
         <small>
           Python | Pygame <br>
           dec 2025 - feb 2026
         </small>
-      </button>
-      <button onclick="window.location.href='https://github.com/Justin-Wt/Godot-Rpg-Game'">
-        <b1>
+      </a>
+      <a href='https://github.com/Justin-Wt/Godot-Rpg-Game' target="_blank" class="card">
+        <span class="title">
           Godot RPG Game<br>
-        </b1>
-        <p1>
+        </span>
+        <span class="desc">
           open world battle <br>
-        </p1>
+        </span>
         <small>
           GDScript <br>
           feb 2026 - present
         </small>
-      </button>
-      <button>
-        <b1>
+      </a>
+      <a target="_blank" class="card">
+        <span class="title">
           rpg -arcade<br>
-        </b1>
-        <p1>
-          auto generated maps and battle
-        </p1>
+        </span>
+        <span class="desc">
+          auto generated maps and battle<br>
+        </span>
         <small>
           Python | Arcade <br>
           april 2026 - present
         </small>
-      </button>
+      </a>
     </div>
+  </section>
+  <section id="contact">
     <h2>
       Contact
     </h2>
@@ -174,5 +238,6 @@
       Email:JustinHalim249@gmail.com<br>
       GitHub:Justin-Wt
     </p>
+  </section>
 </body>
 </html>
