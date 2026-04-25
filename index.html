@@ -87,8 +87,8 @@
       border-radius: 10px;
       padding: 10px;
       flex-direction: column;
-      gap: 10px;
       z-index: 9999;
+      margin-right: 20px;
       box-shadow: 0 0 15px black;
     }
     .popup-menu a {
@@ -101,6 +101,7 @@
     }
     .popup-menu.active{
       display: flex;
+      flex-direction: row;
     }
     .navigator-links{
       display: flex;
@@ -166,10 +167,12 @@
       color: lightblue;
     }
     .title {
+      height: 40px;
       color: #880;
       text-shadow: 0 0 5px black;
     }
     .desc {
+      height: 40px;
       color: #448;
       text-shadow: 0 0 5px black;
     }
@@ -192,17 +195,34 @@
       border-radius: 8px;
       cursor: pointer;
       display: block;
+      justify-content: space-between;
       text-decoration: none;
       text-align: center;
       box-shadow: 0 0 7px #ccc ;
       transition: 0.2s; /* smooth hover effect */
     }
     /* Hover effect */
-    .card:hover {
+    .buttons{
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .button{
+      padding: 5px 10px;
+      font-size: 12px;
+      text-decoration: none;
+      border: 1px solid #999;
+      border-radius: 5px;
+      color: #ccc;
+      transition: 0.2s;
+    }
+    .button:hover {
       background-color: red;
       transform: scale(1.05);
       box-shadow: 0 0 15px red;
     }
+    button.p
   </style>
     <title>
       My Website
@@ -212,20 +232,21 @@
   <div class="navigator">
     <p><span id="typing"></span>|</p>
     <div class="right">
-      <div class="menu-button" onclick="toggleMenu()">☰</div>
+      <div class="menu-button" onclick="Activate()">☰</div>
       <div class="popup-menu" id="popupmenu">
         <a href="#about">
-          About
+          |About|
         </a>
         <a href="#projects">
-          Projects
+          |Projects|
         </a>
         <a href="#skill">
-          Skill
+          |Skill|
         </a>
         <a href="#contact">
-          Contact
+          |Contact|
         </a>
+        <div class="menu-button" onclick="Disable()">X</div>
       </div>
     </div>
   </div>
@@ -259,100 +280,68 @@
     </ul>
   </section>
   <section id="projects">
-    <h1>
-      my project
-    </h1>
+    <h1>my project</h1>
     <div class="projects">
-      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/guess%20the%20block' target="_blank" class="card">
-        <span class="title">
-          guess the block <br>
-        </span>
-        <span class="desc">
-          Flash Counting Game <br>
-        </span>
-        <small>
-          Python <br>
-          oct 2025
-        </small>
-      </a>
-      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/to%20do%20list' target="_blank" class="card">
-        <span class="title">
-          to do list <br>
-        </span>
-        <span class="desc">
-          Manage and track tasks<br>
-        </span>
-        <small>
-          Python <br>
-          oct 2025
-        </small>
-      </a>
-      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/cli%20python%20tutorial' target="_blank" class="card">
-        <span class="title">
-          step-by-step cli python tutorial <br>
-        </span>
-        <span class="desc">
-          Python CLI guide<br>
-        </span>
-        <small>
-          Python<br>
-          oct 2025 - nov 2025
-        </small>
-      </a>
-      <a href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python' target="_blank" class="card">
-        <span class="title">
-          python in python <br>
-        </span>
-        <span class="desc">
-          Interactive Python code<br>
-        </span>
-        <small>
-          Python<br>
-          dec 2025
-        </small>
-      </a>
-      <a href='https://github.com/Justin-Wt/My-Rpg-game-project--py' target="_blank" class="card">
-        <span class="title">
-          Project Rebuild RPG <br>
-        </span>
-        <span class="desc">
-          turn-base battle<br>
-        </span>
-        <small>
-          Python | Pygame <br>
-          dec 2025 - feb 2026
-        </small>
-      </a>
-      <a href='https://github.com/Justin-Wt/Godot-Rpg-Game' target="_blank" class="card">
-        <span class="title">
-          Godot RPG Game<br>
-        </span>
-        <span class="desc">
-          open world battle <br>
-        </span>
-        <small>
-          GDScript <br>
-          feb 2026 - present
-        </small>
-      </a>
-      <a target="_blank" class="card">
-        <span class="title">
-          rpg -arcade<br>
-        </span>
-        <span class="desc">
-          auto generated maps and battle<br>
-        </span>
-        <small>
-          Python | Arcade <br>
-          april 2026 - present
-        </small>
-      </a>
+      <div class="card">
+        <span class="title">count how many black blocks <br></span>
+        <span class="desc">Flash Counting Game <br><br></span>
+        <div class="buttons">
+          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/guess%20the%20block' target="_blank" class="button">[view code]</a>
+          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/guess%20the%20block' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="title">to do list manager and tracker<br></span>
+        <span class="desc">Manage and track tasks<br></span>
+        <div class="buttons">
+          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/to%20do%20list' target="_blank" class="button">[view code]</a>
+          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/to%20do%20list' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="title">step-by-step cli python tutorial <br></span>
+        <span class="desc">Python CLI guide<br><br></span>
+        <div class="buttons">
+          <a href=href='https://github.com/Justin-Wt/MiniProject/tree/main/cli%20python%20tutorial' target="_blank" class="button">[view code]</a>
+          <a href=href='https://github.com/Justin-Wt/MiniProject/tree/main/cli%20python%20tutorial' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="title">python in python <br><br></span>
+        <span class="desc">Interactive Python code<br></span>
+        <div class="buttons">
+          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python' target="_blank" class="button">[view code]</a>
+          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="title">Project Rebuild RPG <br><br></span>
+        <span class="desc">turn-base battle<br><br></span>
+        <div class="buttons">
+          <a href='https://github.com/Justin-Wt/My-Rpg-game-project--py' target="_blank" class="button">[view code]</a>
+          <a href='https://github.com/Justin-Wt/My-Rpg-game-project--py' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="title">Godot RPG Game<br><br></span>
+        <span class="desc">open world battle <br><br></span>
+        <div class="buttons">
+          <a href='https://github.com/Justin-Wt/Godot-Rpg-Game' target="_blank" class="button">[view code]</a>
+          <a href='https://github.com/Justin-Wt/Godot-Rpg-Game' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="title">rpg -arcade<br><br></span>
+        <span class="desc">auto generated maps and battle<br></span>
+        <div class="buttons">
+          <a href='' target="_blank" class="button">[view code]</a>
+          <a href='' target="_blank" class="button">[view demo]</a>
+        </div>
+      </div>
     </div>
   </section>
   <section id="contact">
-    <h1>
-      Contact
-    </h1>
+    <h1>Contact</h1>
     <p>
       WA:081354775009 <br>
       Email:JustinHalim249@gmail.com<br>
@@ -392,9 +381,13 @@
   </section>
   <p>© 2026 Justin Theodore Halim</p>
   <script>
-    function toggleMenu() {
+    function Disable() {
       const menu = document.getElementById("popupmenu");
-      menu.classList.toggle("active");
+      menu.classList.remove("active");
+    }
+    function Activate() {
+      const menu = document.getElementById("popupmenu");
+      menu.classList.add("active");
     }
     const text1 = "My portfolio";
     const text2 = ["A Game Developer", "A Python Coder", "An RPG Systems Maker"];
