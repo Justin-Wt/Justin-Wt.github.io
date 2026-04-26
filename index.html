@@ -17,14 +17,10 @@
     .body{
       margin-top: 60px;
     }
-    .flex-grouping{
+    .right{
       display: flex;
       align-items: center;
-      width: 100%;
-    }
-    .skill-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      margin-right: 40px;
     }
     .skill{
       display: flex;
@@ -33,14 +29,13 @@
       position: relative;
     }
     .label{
-      width: 130px;
+      width: 100px;
     }
     .bar {
       flex: 1;
       background: #222;
       height: 10px;
       border-radius: 5px;
-      position: relative;
     }
     .fill {
       background: red;
@@ -93,6 +88,7 @@
       padding: 10px;
       flex-direction: column;
       z-index: 9999;
+      margin-right: 20px;
       box-shadow: 0 0 15px black;
     }
     .popup-menu a {
@@ -137,26 +133,25 @@
       color: white;
       font-family: Arial;
     }
+    .close-button{
+      display: flex;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      order: 3;
+    }
     .menu-button{
       display: flex;
       color: white;
       font-size: 30px;
-      margin-right: 40px;
       cursor: pointer;
     }
     @media (max-width: 600px){
-      .popup-menu{
-        display: none;
+      .popup-menu.active{
         flex-direction: column;
-        background: black;
-        position: absolute;
-        top: 50px;
-        right: 10px;
-        padding: 10px;
-        border: 1px solid #222;
       }
-      .menu-button{
-        display: block;
+      .close-button{
+        order: -1;
       }
     }
     h1 {
@@ -227,14 +222,7 @@
       transform: scale(1.05);
       box-shadow: 0 0 15px red;
     }
-    .skill a {
-      color: white;
-      text-decoration: none;
-      padding: 5px 10px;
-    }
-    .skill a:hover {
-      color: red;
-    }
+    button.p
   </style>
     <title>
       My Website
@@ -258,7 +246,7 @@
         <a href="#contact">
           |Contact|
         </a>
-        <div class="menu-button" onclick="Disable()">X</div>
+        <div class="close-button" onclick="Disable()">X</div>
       </div>
     </div>
   </div>
@@ -355,43 +343,33 @@
   </section>
   <section id="skill">
     <h1>Skill</h1>
-    <div class="skill-list">
-      <div class="skill">
-        <a href='' target='_blank' class="label">Python</a>
+    <div class="skill">
+      <span class="label">Python</span>
+      <div class="bar">
+        <div class="fill" style="width: 80%"></div>
       </div>
-      <div class="flex-grouping">
-        <div class="bar">
-          <div class="fill" style="width: 80%"></div>
-        </div>
-        <p>80%</p>
+      <p>80%</p>
+    </div>
+    <div class="skill">
+      <span class="label">GDScript</span>
+      <div class="bar">
+        <div class="fill" style="width: 50%"></div>
       </div>
-      <div class="skill">
-        <a href='' target='_blank' class="label">GDScript</a>
+      <p>50%</p>
+    </div>
+    <div class="skill">
+      <span class="label">C++</span>
+      <div class="bar">
+        <div class="fill" style="width: 40%"></div>
       </div>
-      <div class="flex-grouping">
-        <div class="bar">
-          <div class="fill" style="width: 50%"></div>
-        </div>
-        <p>50%</p>
+      <p>40%</p>
+    </div>
+    <div class="skill">
+      <span class="label">HTML/CSS</span>
+      <div class="bar">
+        <div class="fill" style="width: 40%"></div>
       </div>
-      <div class="skill">
-        <a href='' target='_blank' class="label">C++</a>
-      </div>
-      <div class="flex-grouping">
-        <div class="bar">
-          <div class="fill" style="width: 40%"></div>
-        </div>
-        <p>40%</p>
-      </div>
-      <div class="skill">
-        <a href='' target='_blank' class="label">HTML/CSS</a>
-      </div>
-      <div class="flex-grouping">
-        <div class="bar">
-          <div class="fill" style="width: 40%"></div>
-        </div>
-        <p>40%</p>
-      </div>
+      <p>40%</p>
     </div>
   </section>
   <section id="contact">
