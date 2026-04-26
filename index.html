@@ -15,6 +15,10 @@
       margin: 0px;
       color: red;
     }
+    .container{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
     .body{
       margin-top: 60px;
     }
@@ -79,15 +83,15 @@
       border-bottom: 1px solid #222;
     }
     .popup-menu {
-      display: none;
+      display: flex;
+      flex-direction: row;
       position: fixed;
+      align-items: flex-end;
       top: 0px;
       right: 0px;
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 10px;
+      background: #000;
+      height: 40px;
       padding: 10px;
-      flex-direction: column;
       z-index: 9999;
       margin-right: 20px;
       box-shadow: 0 0 15px black;
@@ -100,10 +104,6 @@
     .popup-menu a:hover {
       color: white;
     }
-    .popup-menu.active{
-      display: flex;
-      flex-direction: row;
-    }
     .navigator-links{
       display: flex;
       gap: 5px;
@@ -113,12 +113,10 @@
       text-align: center;
       padding: 0px 0px;
     }
-
     .hero h1 {
       font-size: 40px;
       text-shadow: 0 0 15px red;
     }
-
     .hero p {
       font-size: 20px;
       color: lightgray;
@@ -135,25 +133,40 @@
       font-family: Arial;
     }
     .close-button{
-      display: flex;
+      display: none;
       color: white;
       font-size: 30px;
       cursor: pointer;
+      text-align: right;
+      margin-left: auto;
       order: 3;
     }
     .menu-button{
-      display: flex;
+      display: none;
       color: white;
       font-size: 30px;
       cursor: pointer;
     }
     @media (max-width: 600px){
+      .popup-menu{
+        display: none;
+        border: 1px solid #333;
+        border-radius: 10px;
+        height: auto;
+      }
       .popup-menu.active{
+        display: flex;
         flex-direction: column;
       }
       .close-button{
+        display: flex;
         order: -1;
       }
+      .menu-button{
+        display: flex;
+      }
+      .container{
+        display: block;
     }
     h1 {
       color: red;
@@ -166,6 +179,10 @@
     }
     ul {
       color: lightblue;
+    }
+    ul a{
+      color: inherit;
+      text-decoration: none;
     }
     .title {
       height: 40px;
@@ -275,10 +292,10 @@
       The Language i use
     </h1>
     <ul>
-      <li>Python</li>
-      <li>C++</li>
-      <li>HTML</li>
-      <li>GDScript</li>
+      <li><a href="https://python.org" target='blank'>Python</a></li>
+      <li><a href="https://dev-cpp.com" target='blank'>C++</a></li>
+      <li><a href="https://html.spec.whatwg.org/" target='blank'>HTML</a></li>
+      <li><a href="https://gdscript.com/" target='blank'>GDScript</a></li>
     </ul>
   </section>
   <section id="projects">
@@ -313,7 +330,7 @@
         <span class="desc">Interactive Python code<br></span>
         <div class="buttons">
           <a href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python' target="_blank" class="button">[view code]</a>
-          <a href='https://github.com/Justin-Wt/MiniProject/tree/main/python%20in%20python' target="_blank" class="button">[view demo]</a>
+          <a href='https://github./Justin-Wt//tree/main/python%20in%20python' target="_blank" class="button">[view demo]</a>
         </div>
       </div>
       <div class="card">
@@ -344,34 +361,61 @@
   </section>
   <section id="skill">
     <h1>Skill</h1>
-    <div class="skill">
-      <span class="label">Python</span>
-      <div class="bar">
-        <div class="fill" style="width: 80%"></div>
+    <div class='container'>
+      <div>
+        <p>
+          <b>Python:</b> Building applications, automating tasks, and developing game systems with clear and efficient code.
+          </p>
+          <p>
+            <b>GDScript:</b> Creating gameplay mechanics and systems in Godot for interactive game development.
+          </p>
+          <p>
+            <b>HTML:</b> Structuring web content with semantic, accessible markup.
+          </p>
+          <p>
+            <b>C++:</b> Developing high-performance applications and strengthening problem-solving through low-level control.
+          </p>
+          <P>
+            <b>CSS:</b> Designing responsive layouts and styling user interfaces with modern techniques like Flexbox and Grid.
+          </P>
       </div>
-      <p>80%</p>
-    </div>
-    <div class="skill">
-      <span class="label">GDScript</span>
-      <div class="bar">
-        <div class="fill" style="width: 50%"></div>
+      <div>
+        <div class="skill">
+          <span class="label">Python</span>
+          <div class="bar">
+            <div class="fill" style="width: 80%"></div>
+          </div>
+          <p>80%</p>
+        </div>
+        <div class="skill">
+          <span class="label">GDScript</span>
+          <div class="bar">
+            <div class="fill" style="width: 50%"></div>
+          </div>
+          <p>50%</p>
+        </div>
+        <div class="skill">
+          <span class="label">HTML</span>
+          <div class="bar">
+            <div class="fill" style="width: 45%"></div>
+          </div>
+          <p>45%</p>
+        </div>
+        <div class="skill">
+          <span class="label">C++</span>
+          <div class="bar">
+            <div class="fill" style="width: 40%"></div>
+          </div>
+          <p>40%</p>
+        </div>
+        <div class="skill">
+          <span class="label">css</span>
+          <div class="bar">
+            <div class="fill" style="width: 35%"></div>
+          </div>
+          <p>35%</p>
+        </div>
       </div>
-      <p>50%</p>
-    </div>
-    <div class="skill">
-      <span class="label">C++</span>
-      <div class="bar">
-        <div class="fill" style="width: 40%"></div>
-      </div>
-      <p>40%</p>
-    </div>
-    <div class="skill">
-      <span class="label">HTML/CSS</span>
-      <div class="bar">
-        <div class="fill" style="width: 40%"></div>
-      </div>
-      <p>40%</p>
-    </div>
   </section>
   <section id="contact">
     <h1>Contact</h1>
