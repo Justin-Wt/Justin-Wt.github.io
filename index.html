@@ -7,13 +7,16 @@
     #typing1{
       font-size: 20px;
       text-align: center;
-      color: #ccc;
+      color: #aaa;
     }
     #typing{
       font-size: 26px;
       text-align: center;
       margin-top: 80px;
       color: red;
+    }
+    html {
+      scroll-padding-top: 70px;
     }
     .container{
       display: grid;
@@ -121,11 +124,11 @@
       padding: 0px 0px;
     }
     .hero h1 {
-      font-size: 40px;
+      font-size: 48px;
       text-shadow: 0 0 15px red;
     }
     .hero p {
-      font-size: 20px;
+      font-size: 22px;
       color: lightgray;
       text-shadow: 0 0 15px white;
     }
@@ -176,6 +179,20 @@
         display: block;
       }
     }
+    .contact-container{
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .contact-container a{
+      color: white;
+      text-shadow: 0 0 7px white;
+    }
+    .contact-container a:hover{
+      color: red;
+      background-color: black;
+    }
     h1 {
       color: red;
       text-align: center;
@@ -184,6 +201,11 @@
       color: white;
       text-align: left;
       text-shadow: 0 0 7px red;
+    }
+    h3{
+      text-align: center;
+      color: #ccc;
+      text-shadow: 0 0 15px red;
     }
     ul {
       color: lightblue;
@@ -281,6 +303,9 @@
     <div class="hero">
       <h1>Hello, I'm Justin Theodore Halim</h1>
       <p>I'm <span id="typing1"></span>|</p>
+      <p style="margin-top:10px;">
+        I build RPG systems, combat mechanics, and game logic.
+      </p>
       <div style="margin-top: 20px;">
         <a href="https://github.com/Justin-Wt" target="_blank" class="button">View My Work</a>
         <a href="https://wa.me/6281354775009" target="_blank" class="button">Contact Me</a>
@@ -289,6 +314,7 @@
   </section>
   <section id="about">
     <h1>About me</h1>
+    <h3>-----My journey into Game Development-----</h3>
     <p>Hello i Am</p>
     <h2>Justin Theodore Halim</h2>
     <p>
@@ -314,9 +340,8 @@
     </p>
   </section>
   <section>
-    <h1>
-      The Language i use
-    </h1>
+    <h1>The Language i use</h1>
+    <h3>-----Languages powering my development-----</h3>
     <ul>
       <li><a href="https://python.org" target='blank'>Python</a></li>
       <li><a href="https://dev-cpp.com" target='blank'>C++</a></li>
@@ -326,6 +351,7 @@
   </section>
   <section id="projects">
     <h1>my project</h1>
+    <h3>-----Things i've build and explored-----</h3>
     <div class="projects">
       <div class="card">
         <span class="title">count how many black blocks <br></span>
@@ -387,6 +413,7 @@
   </section>
   <section id="skill">
     <h1>Skill</h1>
+    <h3>-----My current technical strengths and levels-----</h3>
     <div class='container'>
       <div>
         <h2>Languages</h2>
@@ -452,11 +479,13 @@
   </section>
   <section id="contact">
     <h1>Contact</h1>
-    <p>
-      WA:081354775009 <br>
-      Email:JustinHalim249@gmail.com<br>
-      GitHub:Justin-Wt
-    </p>
+    <h3>-----Reach out for projects or ideas-----</h3>
+    <div class="contact-container">
+      <a href="https://wa.me/6281354775009" target="_blank" class="card">WhatsApp</a>
+      <a href="mailto:JustinHalim249@gmail.com" target="_blank" class="card">Email</a>
+      <a href="https://github.com/Justin-Wt" target="_blank" class="card">GitHub</a>
+      <a href="https://www.reddit.com/user/justin_halim" target="_blank" class="card">Reddit</a>
+    </div>
   </section>
   <p>© 2026 Justin Theodore Halim</p>
   <script>
