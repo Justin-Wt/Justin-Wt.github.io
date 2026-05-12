@@ -157,6 +157,16 @@
       font-size: 30px;
       cursor: pointer;
     }
+    .feature{
+      border: 2px solid #fff;
+      height: 200px;
+      padding: 10px;
+      width: 90%;
+      align-items: center;
+      display: flex;
+      gap: 10px;
+      flex-direction: row;
+    }
     @media (max-width: 600px){
       .popup-menu{
         display: none;
@@ -177,6 +187,13 @@
       }
       .container{
         display: block;
+      }
+    }
+    @media (max-width: 1320px) {
+      .feature{
+        display: block;
+        height: auto;
+        padding-top: 30px;
       }
     }
     .contact-container{
@@ -353,6 +370,21 @@
     <h1>my project</h1>
     <h3>-----Things i've build and explored-----</h3>
     <div class="projects">
+      <div class="feature">
+        <div class="card">
+          <span class="title">Virtual OS -arcade<br><br></span>
+          <span class="desc">Fully functional virtual operating system<br></span>
+          <div class="buttons">
+            <a href='https://github.com/Justin-Wt/arcade_virtual_windows_game' target="_blank" class="button">[view code]</a>
+            <a href='https://youtu.be/OnvqYi7aseI' target="_blank" class="button">[view demo]</a>
+          </div>
+        </div>
+        <div>
+          <h2>This is so far the best project i've ever built</h2>
+          <h2>it has a lot of features and mechanics that i am proud of</h2>
+          <h2>it is a virtual os that has a lot of features like L2D wallpapers, battle system, and more</h2>
+        </div>
+      </div>
       <div class="card">
         <span class="title">count how many black blocks <br></span>
         <span class="desc">Flash Counting Game <br><br></span>
@@ -399,14 +431,6 @@
         <div class="buttons">
           <a href='https://github.com/Justin-Wt/Godot-Rpg-Game' target="_blank" class="button">[view code]</a>
           <a href='https://youtu.be/R4UXMqWpcIc' target="_blank" class="button">[view demo]</a>
-        </div>
-      </div>
-      <div class="card">
-        <span class="title">rpg -arcade<br><br></span>
-        <span class="desc">auto generated maps and battle<br></span>
-        <div class="buttons">
-          <a href='' target="_blank" class="button">[view code]</a>
-          <a href='' target="_blank" class="button">[view demo]</a>
         </div>
       </div>
     </div>
