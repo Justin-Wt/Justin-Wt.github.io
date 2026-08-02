@@ -253,9 +253,15 @@ function showOverlay(id, show){ el(id).style.display = show ? 'flex' : 'none'; }
 
 async function initPyodide(){
   el('loading-text').textContent = 'Awakening the arcane engine (loading Python)…';
-  pyodide = await loadPyodide({
-    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
-  });
+  try {
+    pyodide = await loadPyodide({
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
+    });
+    console.log("Pyodide loaded!");
+} catch(err) {
+    console.error(err);
+    document.getElementById("loading-text").textContent = err.message;
+}
   el('loading').style.display = 'none';
   el('game').style.display = 'grid';
   renderStage();
