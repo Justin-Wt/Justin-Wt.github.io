@@ -5,7 +5,7 @@
 <title>Dungeon of Functions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.26.1/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 <style>
   :root{
     --bg: #120d1e;
@@ -253,7 +253,9 @@ function showOverlay(id, show){ el(id).style.display = show ? 'flex' : 'none'; }
 
 async function initPyodide(){
   el('loading-text').textContent = 'Awakening the arcane engine (loading Python)…';
-  pyodide = await loadPyodide();
+  pyodide = await loadPyodide({
+    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
+  });
   el('loading').style.display = 'none';
   el('game').style.display = 'grid';
   renderStage();
@@ -352,7 +354,7 @@ el('retry-btn').addEventListener('click', ()=>{
   heroHP = heroMaxHP;
   renderStage();
 });
-el('playagain-btn').addEventListener('click', ()=>{
+el('playagain-btn').('click', ()=>{
   showOverlay('win-overlay', false);
   stageIndex = 0; heroHP = heroMaxHP;
   renderStage();
