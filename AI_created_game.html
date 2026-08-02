@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dungeon of Functions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pyodide/0.26.1/pyodide.js"></script>
+<style>
+  :root{
+    --bg: #120d1e;
+    --panel: #1c1530;
+    --panel-2: #241a3d;
+    --gold: #cda23f;
+    --gold-bright: #e8c766;
+    --ink: #e9e2f5;
+    --dim: #a99bc4;
+    --cyan: #7fd9c4;
+    --hp: #b23a4e;
+    --hp-glow: #ff6b7f;
+    --border: #382a58;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Spectral',serif;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 20% -10%, #2b1f4a 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 10%, #1a2f3a 0%, transparent 50%),
+      var(--bg);
+  }
+  h1,h2,h3,.display{font-family:'Cinzel',serif;letter-spacing:.03em;}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px;}
+
+  /* ---- header ---- */
+  .header{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+  .header h1{font-size:28px;color:var(--gold-bright);margin:0;text-shadow:0 0 18px rgba(205,162,63,.35);}
+  .header .tag{color:var(--dim);font-size:13px;font-style:italic;}
+
+  /* ---- loading ---- */
+  #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;text-align:center;}
+  .rune{width:54px;height:54px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #loading p{color:var(--dim);font-style:italic;}
+
+  /* ---- game layout ---- */
+  #game{display:none;grid-template-columns: 1.1fr 1fr;gap:22px;}
+  @media(max-width:880px){#game{grid-template-columns:1fr;}}
+
+  .panel{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+
+  /* ---- status bars ---- */
+  .status-row{display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap;}
+  .stat{flex:1;min-width:140px;}
+  .stat-label{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+  .bar{height:10px;border-radius:6px;background:#0f0a1c;overflow:hidden;border:1px solid var(--border);}
+  .bar-fill{height:100%;transition:width .5s ease;}
+  .bar-fill.hp{background:linear-gradient(90deg,var(--hp),var(--hp-glow));}
+  .bar-fill.monster{background:linear-gradient(90deg,#6b2740,#c0435a);}
+
+  .stage-badge{color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+  .monster-name{font-size:22px;color:var(--ink);margin:0 0 4px;}
+  .monster-art{font-size:44px;text-align:center;margin:8px 0 14px;filter:drop-shadow(0 0 12px rgba(205,162,63,.25));}
+  .lore{color:var(--dim);font-style:italic;font-size:14px;line-height:1.5;margin-bottom:14px;}
+
+  .quest{background:#0f0a1c;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;}
+  .quest h3{margin:0 0 8px;font-size:14px;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em;}
+  .quest p{margin:0 0 8px;font-size:15px;line-height:1.55;}
+  .quest code{background:#1c1530;padding:1px 6px;border-radius:4px;color:var(--gold-bright);font-family:'IBM Plex Mono',monospace;font-size:13px;}
+
+  .examples{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--dim);border-top:1px dashed var(--border);padding-top:10px;margin-top:10px;}
+  .examples div{margin-bottom:3px;}
+
+  textarea#editor{
+    width:100%;min-height:220px;background:#0d0916;color:#dff5eb;border:1px solid var(--border);
+    border-radius:8px;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:14px;line-height:1.55;
+    resize:vertical;tab-size:4;
+  }
+  textarea#editor:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(205,162,63,.15);}
+
+  .btnrow{display:flex;gap:10px;margin-top:12px;align-items:center;}
+  button{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:11px 20px;border-radius:7px;border:1px solid var(--gold);background:linear-gradient(180deg,#3a2c58,#241a3d);color:var(--gold-bright);cursor:pointer;transition:.15s;}
+  button:hover:not(:disabled){background:linear-gradient(180deg,#4a3970,#2c2049);box-shadow:0 0 14px rgba(205,162,63,.25);}
+  button:disabled{opacity:.45;cursor:not-allowed;}
+  button.ghost{background:transparent;border-color:var(--border);color:var(--dim);}
+  button.ghost:hover:not(:disabled){border-color:var(--dim);color:var(--ink);}
+
+  .log{margin-top:14px;background:#0d0916;border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;max-height:180px;overflow-y:auto;}
+  .log .ok{color:#7fd9a4;}
+  .log .bad{color:#ff8093;}
+  .log .sys{color:var(--dim);}
+  .log div{margin-bottom:4px;white-space:pre-wrap;}
+
+  /* ---- overlays ---- */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(8,5,15,.88);align-items:center;justify-content:center;z-index:10;padding:20px;}
+  .overlay .box{background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:36px 40px;text-align:center;max-width:420px;}
+  .overlay h2{font-size:26px;margin:0 0 10px;}
+  .overlay p{color:var(--dim);margin-bottom:20px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>⚔ Dungeon of Functions</h1>
+    <div class="tag">a text RPG fought with real Python</div>
+  </div>
+
+  <div id="loading">
+    <div class="rune"></div>
+    <p id="loading-text">Awakening the arcane engine (loading Python)…</p>
+  </div>
+
+  <div id="game">
+    <!-- LEFT: battle -->
+    <div class="panel">
+      <div class="status-row">
+        <div class="stat">
+          <div class="stat-label"><span>Hero HP</span><span id="hp-text">100/100</span></div>
+          <div class="bar"><div class="bar-fill hp" id="hp-bar" style="width:100%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><span id="monster-hp-label">Monster HP</span><span id="mhp-text">100/100</span></div>
+          <div class="bar"><div class="bar-fill monster" id="mhp-bar" style="width:100%"></div></div>
+        </div>
+      </div>
+
+      <div class="stage-badge" id="stage-badge">Stage 1 of 5</div>
+      <div class="monster-art" id="monster-art">👺</div>
+      <h2 class="monster-name" id="monster-name">Goblin Scout</h2>
+      <p class="lore" id="monster-lore">It snarls, clutching a rusted blade.</p>
+    </div>
+
+    <!-- RIGHT: spellcasting -->
+    <div class="panel">
+      <div class="quest">
+        <h3>The Incantation</h3>
+        <p id="quest-desc">Write a function to cast your spell.</p>
+        <div class="examples" id="quest-examples"></div>
+      </div>
+
+      <textarea id="editor" spellcheck="false"></textarea>
+
+      <div class="btnrow">
+        <button id="run-btn">Cast Spell ▶</button>
+        <button class="ghost" id="reset-btn">Reset Code</button>
+      </div>
+
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="lose-overlay">
+  <div class="box">
+    <h2 style="color:var(--hp-glow)">You Have Fallen</h2>
+    <p id="lose-text">The dungeon claims another challenger.</p>
+    <button id="retry-btn">Retry Stage</button>
+  </div>
+</div>
+
+<div class="overlay" id="win-overlay">
+  <div class="box">
+    <h2 style="color:var(--gold-bright)">The Dungeon Is Cleared</h2>
+    <p>Your code slew every guardian within. Well cast, wizard.</p>
+    <button id="playagain-btn">Play Again</button>
+  </div>
+</div>
+
+<script>
+const STAGES = [
+  {
+    name: "Goblin Scout", art: "👺",
+    lore: "It snarls, clutching a rusted blade, blocking the passage.",
+    desc: "Write <code>fireball(n)</code> that returns double the given power <code>n</code>.",
+    starter: "def fireball(n):\n    # return double n\n    pass",
+    examples: [["fireball(3)", 6], ["fireball(10)", 20], ["fireball(0)", 0]],
+    fn: "fireball", monsterHP: 60, damagePerFail: 12
+  },
+  {
+    name: "Skeleton Archer", art: "💀",
+    lore: "Bones click as it nocks a bone-white arrow, waiting for a weakness.",
+    desc: "Write <code>is_even(n)</code> returning <code>True</code> if <code>n</code> is even, else <code>False</code>. Even numbers shatter its aim.",
+    starter: "def is_even(n):\n    # return True if n is even\n    pass",
+    examples: [["is_even(4)", true], ["is_even(7)", false], ["is_even(0)", true]],
+    fn: "is_even", monsterHP: 75, damagePerFail: 14
+  },
+  {
+    name: "Orc Brute", art: "🗿",
+    lore: "A wall of muscle and rage. Only overwhelming force will move it.",
+    desc: "Write <code>sum_potion(nums)</code> that returns the sum of a list of numbers.",
+    starter: "def sum_potion(nums):\n    # return the sum of nums\n    pass",
+    examples: [["sum_potion([1,2,3])", 6], ["sum_potion([])", 0], ["sum_potion([5,5,5,5])", 20]],
+    fn: "sum_potion", monsterHP: 90, damagePerFail: 16
+  },
+  {
+    name: "Shadow Wraith", art: "👻",
+    lore: "It speaks only in riddles spoken backwards. Answer it in kind.",
+    desc: "Write <code>reverse_spell(s)</code> that returns the string <code>s</code> reversed.",
+    starter: "def reverse_spell(s):\n    # return the reverse of s\n    pass",
+    examples: [["reverse_spell('abc')", "cba"], ["reverse_spell('dungeon')", "noegnud"], ["reverse_spell('')", ""]],
+    fn: "reverse_spell", monsterHP: 100, damagePerFail: 18
+  },
+  {
+    name: "The Dragon of Recursion", art: "🐉",
+    lore: "The final guardian. Its scales are patterned in an ancient, self-repeating sequence.",
+    desc: "Write <code>fibonacci(n)</code> returning the n-th Fibonacci number (0-indexed: fib(0)=0, fib(1)=1).",
+    starter: "def fibonacci(n):\n    # return the n-th fibonacci number\n    pass",
+    examples: [["fibonacci(0)", 0], ["fibonacci(1)", 1], ["fibonacci(6)", 8], ["fibonacci(10)", 55]],
+    fn: "fibonacci", monsterHP: 140, damagePerFail: 20
+  }
+];
+
+let pyodide = null;
+let stageIndex = 0;
+let heroHP = 100, heroMaxHP = 100;
+let monsterHP = 0, monsterMaxHP = 0;
+
+const el = id => document.getElementById(id);
+const logEl = el('log');
+
+function logLine(text, cls){
+  const d = document.createElement('div');
+  if(cls) d.className = cls;
+  d.textContent = text;
+  logEl.appendChild(d);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function renderStage(){
+  const s = STAGES[stageIndex];
+  monsterHP = s.monsterHP; monsterMaxHP = s.monsterHP;
+  el('stage-badge').textContent = `Stage ${stageIndex+1} of ${STAGES.length}`;
+  el('monster-art').textContent = s.art;
+  el('monster-name').textContent = s.name;
+  el('monster-lore').textContent = s.lore;
+  el('quest-desc').innerHTML = s.desc;
+  el('editor').value = s.starter;
+  const exs = s.examples.map(([call, out]) => `>>> ${call}\n${JSON.stringify(out)}`).join('\n');
+  el('quest-examples').textContent = exs;
+  logEl.innerHTML = '';
+  logLine(`A ${s.name} blocks your path.`, 'sys');
+  updateBars();
+}
+
+function updateBars(){
+  el('hp-text').textContent = `${heroHP}/${heroMaxHP}`;
+  el('hp-bar').style.width = `${Math.max(0,heroHP/heroMaxHP*100)}%`;
+  el('mhp-text').textContent = `${Math.max(0,monsterHP)}/${monsterMaxHP}`;
+  el('mhp-bar').style.width = `${Math.max(0,monsterHP/monsterMaxHP*100)}%`;
+}
+
+function showOverlay(id, show){ el(id).style.display = show ? 'flex' : 'none'; }
+
+async function initPyodide(){
+  el('loading-text').textContent = 'Awakening the arcane engine (loading Python)…';
+  pyodide = await loadPyodide();
+  el('loading').style.display = 'none';
+  el('game').style.display = 'grid';
+  renderStage();
+}
+
+function pyRepr(jsVal){
+  // convert a JS value (from JSON) to a python literal string for comparison calls
+  if (typeof jsVal === 'string') return JSON.stringify(jsVal);
+  if (typeof jsVal === 'boolean') return jsVal ? 'True' : 'False';
+  if (Array.isArray(jsVal)) return '[' + jsVal.map(pyRepr).join(',') + ']';
+  return JSON.stringify(jsVal);
+}
+
+async function runTests(){
+  const s = STAGES[stageIndex];
+  const code = el('editor').value;
+  el('run-btn').disabled = true;
+  logLine('— casting —', 'sys');
+
+  let passed = 0, total = s.examples.length, hadError = false, errMsg = '';
+
+  try {
+    pyodide.runPython(code);
+  } catch(e){
+    hadError = true;
+    errMsg = String(e).split('\n').slice(-2).join(' ');
+  }
+
+  if(!hadError){
+    for(const [call, expected] of s.examples){
+      // call is like "fibonacci(6)" - reuse it directly since arg literals are already python-valid
+      const testCode = `${s.fn.length ? '' : ''}\n__result = ${call}\n__result`;
+      try {
+        const result = pyodide.runPython(testCode);
+        let jsResult = result;
+        if (jsResult && jsResult.toJs) jsResult = jsResult.toJs();
+        const ok = JSON.stringify(jsResult) === JSON.stringify(expected);
+        if(ok){
+          passed++;
+          logLine(`✓ ${call} → ${JSON.stringify(jsResult)}`, 'ok');
+        } else {
+          logLine(`✗ ${call} → got ${JSON.stringify(jsResult)}, expected ${JSON.stringify(expected)}`, 'bad');
+        }
+      } catch(e){
+        logLine(`✗ ${call} raised an error`, 'bad');
+      }
+    }
+  } else {
+    logLine(`✗ Your spell fizzled: ${errMsg}`, 'bad');
+  }
+
+  // resolve outcome
+  if(hadError || passed === 0){
+    const dmg = s.damagePerFail;
+    heroHP = Math.max(0, heroHP - dmg);
+    logLine(`The ${s.name} strikes back for ${dmg} damage!`, 'bad');
+  } else {
+    const dmg = Math.round(monsterMaxHP * (passed/total));
+    monsterHP = Math.max(0, monsterHP - dmg);
+    logLine(`Your spell lands for ${dmg} damage! (${passed}/${total} trials true)`, 'ok');
+    if(passed < total){
+      const counter = Math.round(s.damagePerFail * (1 - passed/total));
+      if(counter > 0){
+        heroHP = Math.max(0, heroHP - counter);
+        logLine(`Imperfect casting lets it counter for ${counter} damage.`, 'bad');
+      }
+    }
+  }
+
+  updateBars();
+  el('run-btn').disabled = false;
+
+  if(heroHP <= 0){
+    el('lose-text').textContent = `The ${s.name} overwhelms you. Rewrite your spell and try again.`;
+    showOverlay('lose-overlay', true);
+    return;
+  }
+  if(monsterHP <= 0){
+    logLine(`The ${s.name} is vanquished!`, 'sys');
+    setTimeout(()=>{
+      stageIndex++;
+      if(stageIndex >= STAGES.length){
+        showOverlay('win-overlay', true);
+      } else {
+        heroHP = Math.min(heroMaxHP, heroHP + 15);
+        renderStage();
+      }
+    }, 900);
+  }
+}
+
+el('run-btn').addEventListener('click', runTests);
+el('reset-btn').addEventListener('click', ()=>{ el('editor').value = STAGES[stageIndex].starter; });
+el('retry-btn').addEventListener('click', ()=>{
+  showOverlay('lose-overlay', false);
+  heroHP = heroMaxHP;
+  renderStage();
+});
+el('playagain-btn').addEventListener('click', ()=>{
+  showOverlay('win-overlay', false);
+  stageIndex = 0; heroHP = heroMaxHP;
+  renderStage();
+});
+
+el('editor').addEventListener('keydown', function(e){
+  if(e.key === 'Tab'){
+    e.preventDefault();
+    const start = this.selectionStart, end = this.selectionEnd;
+    this.value = this.value.slice(0,start) + '    ' + this.value.slice(end);
+    this.selectionStart = this.selectionEnd = start + 4;
+  }
+});
+
+initPyodide();
+</script>
+</body>
+</html>
